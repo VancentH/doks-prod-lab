@@ -3,7 +3,7 @@
 # down.sh — Lab-mode teardown script
 #
 # Purpose: cleanly remove every billable resource after a lab session.
-# Location: kubernetes-production-guide-infra/scripts/down.sh
+# Location: doks-prod-lab/scripts/down.sh
 # Usage:    run ./scripts/down.sh from the repo root
 #
 # Steps:
@@ -118,9 +118,30 @@ else
 fi
 
 # ---- 4. terraform destroy ---------------------------------------------------
-info "Running terraform destroy"
-terraform -chdir="$TF_DIR" destroy -auto-approve
-ok "terraform destroy finished"
+# DOKS deletes cluster Droplets asynchronously, so the VPC can still have
+# members right after the cluster is gone ("Can not delete VPC with members").
+# Retry a few times instead of failing on the first attempt.
+DESTROY_ATTEMPTS="${DESTROY_ATTEMPTS:-4}"
+DESTROY_RETRY_WAIT="${DESTROY_RETRY_WAIT:-60}"   # seconds
+destroy_ok=0
+
+for attempt in $(seq 1 "$DESTROY_ATTEMPTS"); do
+  info "Running terraform destroy (attempt ${attempt}/${DESTROY_ATTEMPTS})"
+  if terraform -chdir="$TF_DIR" destroy -auto-approve; then
+    destroy_ok=1
+    break
+  fi
+  if (( attempt < DESTROY_ATTEMPTS )); then
+    warn "terraform destroy failed, retrying in ${DESTROY_RETRY_WAIT}s"
+    sleep "$DESTROY_RETRY_WAIT"
+  fi
+done
+
+if [[ "$destroy_ok" -eq 1 ]]; then
+  ok "terraform destroy finished"
+else
+  warn "terraform destroy did not complete, checking leftovers anyway"
+fi
 
 # ---- 5. Check for leftover resources ----------------------------------------
 info "Checking for leftover billable resources"
@@ -153,3 +174,8 @@ else
   warn "Leftover resources found, review them in the control panel and delete manually"
 fi
 info "Reminder: check API -> Tokens in the control panel and confirm the doks:${CLUSTER_NAME}... token was removed"
+
+# Non-zero exit code so a failed teardown is never mistaken for a clean one
+if [[ "$destroy_ok" -ne 1 || "$leftover" -ne 0 ]]; then
+  exit 1
+fi

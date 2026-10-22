@@ -19,7 +19,8 @@ module "doks" {
   region                    = var.region
   kubernetes_version_prefix = var.kubernetes_version_prefix
   tags                      = local.tags
-
+  vpc_ip_range              = var.vpc_ip_range
+  # module parameters       = lab environment variable values
   system_pool_size        = var.system_pool_size
   system_pool_node_count  = var.system_pool_node_count
   workload_pool_size      = var.workload_pool_size

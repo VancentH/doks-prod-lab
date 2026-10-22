@@ -16,6 +16,12 @@ variable "kubernetes_version_prefix" {
   default     = "1.37."
 }
 
+variable "vpc_ip_range" {
+  description = "CIDR for the cluster VPC. Must not overlap with any other VPC in the account (any region) or with the DOKS pod and service ranges."
+  type        = string
+  default     = "10.110.0.0/20"
+}
+
 variable "system_pool_size" {
   description = "Droplet size for the system node pool."
   type        = string

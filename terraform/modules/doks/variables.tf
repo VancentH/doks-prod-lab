@@ -26,9 +26,8 @@ variable "tags" {
 # Networking
 # -----------------------------------------------------------------------------
 variable "vpc_ip_range" {
-  description = "CIDR for the cluster VPC. Must not overlap with the DOKS pod and service ranges."
+  description = "CIDR for the cluster VPC. Must be unique across all VPCs in the account."
   type        = string
-  default     = "10.110.0.0/20"
 }
 
 # -----------------------------------------------------------------------------
