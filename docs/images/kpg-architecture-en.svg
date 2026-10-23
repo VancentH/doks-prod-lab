@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 472" width="760" height="472" role="img" aria-labelledby="title desc">
+  <title id="title">Terraform provisions, Argo CD deploys, Rancher manages</title>
+  <desc id="desc">Architecture of the Kubernetes Production Guide lab: a k3s management cluster running Rancher, cert-manager and Vault, and a DOKS workload cluster running the Rancher agent, Argo CD, Argo Rollouts, Istio, the OpenTelemetry Demo and the observability stack. Terraform provisions both clusters and Argo CD syncs from the infra and apps Git repos.</desc>
+  <style>
+    .bg      { fill: #ffffff; }
+    .ink     { fill: #1a1a1a; }
+    .quiet   { fill: #5c5c5c; }
+    .edge    { stroke: #c9c9c1; }
+    .arrow   { fill: #c9c9c1; }
+    .group   { fill: #efefec; stroke: #c9c9c1; stroke-width: 1; }
+    .box     { fill: none; stroke: #c9c9c1; stroke-width: 1.25; }
+    text     { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 13px; }
+    .title   { font-size: 15px; font-weight: 600; }
+    .name    { font-weight: 600; }
+    .small   { font-size: 11.5px; }
+    @media (prefers-color-scheme: dark) {
+      .bg    { fill: #0d1117; }
+      .ink   { fill: #e6edf3; }
+      .quiet { fill: #9da7b3; }
+      .edge  { stroke: #4a525c; }
+      .arrow { fill: #4a525c; }
+      .group { fill: #161b22; stroke: #4a525c; }
+      .box   { stroke: #4a525c; }
+    }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path class="arrow" d="M0 0L10 5L0 10z"/>
+    </marker>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="760" height="472"/>
+
+  <!-- Title -->
+  <text class="ink title" x="24" y="30">Terraform provisions, Argo CD deploys, Rancher manages</text>
+
+  <!-- Terraform -->
+  <rect class="box" x="24" y="48" width="240" height="56" rx="8"/>
+  <text class="ink name" x="36" y="72">Terraform</text>
+  <text class="quiet small" x="36" y="88">Droplet · DOKS · VPC · DNS</text>
+
+  <!-- Git repos -->
+  <rect class="box" x="516" y="48" width="220" height="56" rx="8"/>
+  <text class="ink name" x="528" y="72">Git repos: infra · apps</text>
+  <text class="quiet small" x="528" y="88">Single source for Argo CD</text>
+
+  <!-- Management cluster -->
+  <rect class="group" x="24" y="136" width="276" height="312" rx="8"/>
+  <text class="ink name" x="40" y="158">Mgmt cluster · k3s on Droplet</text>
+
+  <rect class="box" x="40" y="184" width="244" height="72" rx="8"/>
+  <text class="ink name" x="52" y="208">Rancher</text>
+  <text class="quiet small" x="52" y="224">SSO, RBAC, Projects</text>
+  <text class="quiet small" x="52" y="240">Multi-cluster overview</text>
+
+  <rect class="box" x="40" y="272" width="244" height="72" rx="8"/>
+  <text class="ink name" x="52" y="296">cert-manager</text>
+  <text class="quiet small" x="52" y="312">TLS certificates for Rancher</text>
+  <text class="quiet small" x="52" y="328">Backups via rancher-backup</text>
+
+  <rect class="box" x="40" y="360" width="244" height="72" rx="8"/>
+  <text class="ink name" x="52" y="384">Vault</text>
+  <text class="quiet small" x="52" y="400">Secrets live outside DOKS</text>
+  <text class="quiet small" x="52" y="416">Synced by External Secrets</text>
+
+  <!-- DOKS workload cluster -->
+  <rect class="group" x="380" y="136" width="356" height="312" rx="8"/>
+  <text class="ink name" x="396" y="158">DOKS · workload cluster</text>
+
+  <rect class="box" x="396" y="184" width="154" height="72" rx="8"/>
+  <text class="ink name" x="408" y="208">Rancher agent</text>
+  <text class="quiet small" x="408" y="224">cattle-cluster-agent</text>
+
+  <rect class="box" x="566" y="184" width="154" height="72" rx="8"/>
+  <text class="ink name" x="578" y="208">Argo CD</text>
+  <text class="quiet small" x="578" y="224">Syncs from Git</text>
+  <text class="quiet small" x="578" y="240">all apps and config</text>
+
+  <rect class="box" x="396" y="272" width="154" height="72" rx="8"/>
+  <text class="ink name" x="408" y="296">Argo Rollouts</text>
+  <text class="quiet small" x="408" y="312">Canary, header routes</text>
+  <text class="quiet small" x="408" y="328">Splits via Istio</text>
+
+  <rect class="box" x="566" y="272" width="154" height="72" rx="8"/>
+  <text class="ink name" x="578" y="296">Istio (sidecar)</text>
+  <text class="quiet small" x="578" y="312">North-south and</text>
+  <text class="quiet small" x="578" y="328">east-west routing</text>
+
+  <rect class="box" x="396" y="360" width="154" height="72" rx="8"/>
+  <text class="ink name" x="408" y="384">OTel Demo</text>
+  <text class="quiet small" x="408" y="400">Microservice workload</text>
+
+  <rect class="box" x="566" y="360" width="154" height="72" rx="8"/>
+  <text class="ink name" x="578" y="384">Observability</text>
+  <text class="quiet small" x="578" y="400">Prometheus · Loki</text>
+  <text class="quiet small" x="578" y="416">Tempo · Grafana</text>
+
+  <!-- Connectors -->
+  <g class="edge" fill="none" stroke-width="1.25">
+    <path d="M144 104V136" marker-end="url(#arrow)"/>
+    <path d="M264 76H430V136" marker-end="url(#arrow)"/>
+    <path d="M643 104V184" marker-end="url(#arrow)"/>
+    <path d="M396 220H284" marker-end="url(#arrow)"/>
+  </g>
+  <text class="quiet small" x="152" y="124">provisions</text>
+  <text class="quiet small" x="347" y="68" text-anchor="middle">provisions</text>
+  <text class="quiet small" x="651" y="124">syncs</text>
+  <text class="quiet small" x="332" y="212" text-anchor="middle">connects back</text>
+</svg>

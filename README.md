@@ -2,6 +2,10 @@
 
 Simulates a production-grade environment to practice day-to-day Kubernetes cluster operations.
 
+## Architecture
+
+![Terraform provisions, Argo CD deploys, Rancher manages](docs/images/kpg-architecture-en.svg)
+
 ## Stack
 
 - **DigitalOcean Kubernetes (DOKS)**: provisioned via Terraform
