@@ -4,7 +4,7 @@ Simulates a production-grade environment to practice day-to-day Kubernetes clust
 
 ## Architecture
 
-![Terraform provisions, Argo CD deploys, Rancher manages](docs/images/kpg-architecture-en.svg)
+![Terraform provisions, Argo CD deploys, Rancher manages](docs/images/dpl-architecture-en.svg)
 
 ## Stack
 
