@@ -21,6 +21,11 @@ set -euo pipefail
 CLUSTER_NAME="${CLUSTER_NAME:-dpl-cluster}"
 TF_DIR="${TF_DIR:-terraform/envs/lab}"
 WAIT_TIMEOUT="${WAIT_TIMEOUT:-300}"   # seconds
+DNS_ZONE="${DNS_ZONE:-lab.example.com}"
+
+# admin_cidrs is a required Terraform variable with no default. Its value does
+# not matter for destroy, so use a placeholder when up.sh has not set it.
+export TF_VAR_admin_cidrs="${TF_VAR_admin_cidrs:-[\"127.0.0.1/32\"]}"
 
 # ---- Output helpers ---------------------------------------------------------
 info()  { printf '\033[1;34m[INFO]\033[0m  %s\n' "$*"; }
@@ -51,7 +56,7 @@ ok "Preflight checks passed"
 # ---- Confirmation -----------------------------------------------------------
 echo
 warn "This will delete cluster '${CLUSTER_NAME}' and all Terraform-managed resources."
-warn "The Spaces bucket will NOT be deleted."
+warn "The Spaces bucket and the DNS zone ${DNS_ZONE} will NOT be deleted."
 read -r -p "Type the cluster name to confirm: " answer
 [[ "$answer" == "$CLUSTER_NAME" ]] || fail "Name does not match, aborting"
 
@@ -166,6 +171,22 @@ check "Load Balancers"      doctl compute load-balancer list --no-header --forma
 check "Volumes"             doctl compute volume list --no-header --format Name,Size,Region
 check "Snapshots"           doctl compute snapshot list --no-header --format Name,ResourceType,Size
 check "Reserved IPs"        doctl compute reserved-ip list --no-header --format IP,Region,DropletName
+# Only firewalls created by this lab: Terraform names them "dpl-*" and DOKS
+# names its own "k8s-<cluster-id>-*". Unrelated firewalls in the account are
+# ignored (firewalls are free, but a leftover lab firewall means a failed destroy).
+lab_firewalls() {
+  doctl compute firewall list --no-header --format Name,Status \
+    | awk '$1 ~ /^(dpl-|k8s-)/'
+}
+check "lab Firewalls" lab_firewalls
+
+# Any record other than NS/SOA left in the zone points at an IP that may be
+# handed to someone else's Droplet (dangling DNS / subdomain takeover).
+dns_records() {
+  doctl compute domain records list "$DNS_ZONE" --no-header --format Type,Name,Data \
+    | awk '$1 != "NS" && $1 != "SOA"'
+}
+check "DNS records in ${DNS_ZONE}" dns_records
 
 echo
 if [[ "$leftover" -eq 0 ]]; then

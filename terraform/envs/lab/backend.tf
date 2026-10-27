@@ -6,6 +6,7 @@ terraform {
 
     endpoints = {
       s3 = "https://sgp1.digitaloceanspaces.com"
+      # Region of the state bucket, NOT of the cluster.
     }
 
     skip_credentials_validation = true

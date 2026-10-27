@@ -1,0 +1,30 @@
+#cloud-config
+# Installs a single-node k3s server for the management plane
+# (Rancher, cert-manager, Vault).
+
+package_update: true
+packages:
+  - curl
+  - jq
+
+write_files:
+  - path: /etc/rancher/k3s/config.yaml
+    permissions: "0600"
+    content: |
+      # Kubeconfig readable by root only
+      write-kubeconfig-mode: "0600"
+      # Extra names on the API server certificate
+      tls-san:
+        - ${rancher_fqdn}
+      node-label:
+        - node-role.dpl.io/pool=mgmt
+
+runcmd:
+  - curl -sfL https://get.k3s.io | ${k3s_install_env} sh -s - server
+  # Wait until the node reports Ready so that "cloud-init status --wait"
+  # only returns once the cluster is usable.
+  - >-
+    for i in $(seq 1 60); do
+    k3s kubectl get nodes 2>/dev/null | grep -q " Ready" && break;
+    sleep 5;
+    done

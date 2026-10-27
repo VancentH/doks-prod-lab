@@ -29,6 +29,28 @@ module "doks" {
 }
 
 # -----------------------------------------------------------------------------
+# Management cluster (single-node k3s on a Droplet, same VPC as DOKS)
+# -----------------------------------------------------------------------------
+module "mgmt" {
+  source = "../../modules/mgmt-k3s"
+
+  name         = var.mgmt_name
+  region       = var.region
+  vpc_id       = module.doks.vpc_id
+  vpc_ip_range = var.vpc_ip_range
+  size         = var.mgmt_size
+  tags         = local.tags
+
+  ssh_key_name = var.ssh_key_name
+  admin_cidrs  = var.admin_cidrs
+  k3s_version  = var.k3s_version
+  k3s_channel  = var.k3s_channel
+
+  dns_zone         = var.dns_zone
+  rancher_hostname = var.rancher_hostname
+}
+
+# -----------------------------------------------------------------------------
 # DigitalOcean project
 # Groups all lab resources so their cost is visible in one place.
 # -----------------------------------------------------------------------------
@@ -40,5 +62,6 @@ resource "digitalocean_project" "this" {
 
   resources = [
     module.doks.cluster_urn,
+    module.mgmt.droplet_urn,
   ]
 }
