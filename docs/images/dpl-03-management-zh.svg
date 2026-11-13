@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="480" height="240" role="img" aria-labelledby="title desc">
+<title id="title">管理 · Rancher</title>
+<desc id="desc">DOKS 上的 Rancher agent（cattle-cluster-agent）主動連回管理叢集上的 Rancher。Rancher 提供 SSO、RBAC、Projects 與多叢集總覽；cert-manager 負責 Rancher 的 TLS 憑證，rancher-backup 負責備份。</desc>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+<rect width="100%" height="100%" fill="#020617"/>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/></marker>
+  <marker id="arrowstart" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="10 0, 0 3.5, 10 7" fill="#64748b"/></marker>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+</defs>
+<rect width="100%" height="100%" fill="url(#grid)"/>
+<rect x="205" y="10" width="270" height="220" rx="10" fill="rgba(15, 23, 42, 0.4)" stroke="#94a3b8" stroke-width="1" stroke-dasharray="8,4"/>
+<text x="217" y="28" fill="#94a3b8" font-size="11" font-weight="600">管理叢集 · k3s</text>
+<rect x="5" y="75" width="125" height="95" rx="10" fill="rgba(15, 23, 42, 0.4)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+<text x="17" y="93" fill="#22d3ee" font-size="11" font-weight="600">DOKS</text>
+<path d="M 124 128 H 218" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="167" y="145" fill="#94a3b8" font-size="7" text-anchor="middle">主動連回</text>
+<path d="M 325 125 H 350 V 60 H 373" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 325 125 H 350 V 100 H 373" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 325 125 H 350 V 140 H 373" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 325 125 H 350 V 180 H 373" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 272 95 V 71" fill="none" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="278" y="86" fill="#94a3b8" font-size="7" text-anchor="start">備份</text>
+<path d="M 272 180 V 157" fill="none" stroke="#fb7185" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="278" y="172" fill="#94a3b8" font-size="7" text-anchor="start">TLS</text>
+<rect x="12" y="100" width="112" height="56" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="68.0" y="125.5" fill="white" font-size="10" font-weight="600" text-anchor="middle">Rancher agent</text>
+<text x="68.0" y="139.5" fill="#94a3b8" font-size="8" text-anchor="middle">cattle-cluster-agent</text>
+<rect x="220" y="95" width="105" height="60" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="272.5" y="130.0" fill="white" font-size="12" font-weight="600" text-anchor="middle">Rancher</text>
+<rect x="220" y="35" width="105" height="34" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="272.5" y="56.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">rancher-backup</text>
+<rect x="220" y="180" width="105" height="40" rx="6" fill="rgba(136, 19, 55, 0.4)" stroke="#fb7185" stroke-width="1.5"/>
+<text x="272.5" y="204.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">cert-manager</text>
+<rect x="375" y="45" width="90" height="30" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="420.0" y="64.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">SSO</text>
+<rect x="375" y="85" width="90" height="30" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="420.0" y="104.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">RBAC</text>
+<rect x="375" y="125" width="90" height="30" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="420.0" y="144.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">Projects</text>
+<rect x="375" y="165" width="90" height="30" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="420.0" y="184.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">多叢集總覽</text>
+</svg>

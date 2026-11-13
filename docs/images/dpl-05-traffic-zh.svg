@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="480" height="240" role="img" aria-labelledby="title desc">
+<title id="title">流量 · Istio + Argo Rollouts</title>
+<desc id="desc">Istio sidecar 同時處理南北向（外部進來）與東西向（服務之間）的路由。Argo Rollouts 負責 canary 發佈與 header 路由，透過 Istio 在 stable 與 canary 版本之間分流。</desc>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+<rect width="100%" height="100%" fill="#020617"/>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/></marker>
+  <marker id="arrowstart" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="10 0, 0 3.5, 10 7" fill="#64748b"/></marker>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+</defs>
+<rect width="100%" height="100%" fill="url(#grid)"/>
+<rect x="255" y="10" width="215" height="220" rx="10" fill="rgba(15, 23, 42, 0.4)" stroke="#22d3ee" stroke-width="1" stroke-dasharray="8,4"/>
+<text x="267" y="28" fill="#22d3ee" font-size="11" font-weight="600">OTel Demo</text>
+<path d="M 86 120 H 108" fill="none" stroke="#22d3ee" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 165 65 V 93" fill="none" stroke="#34d399" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="171" y="82" fill="#94a3b8" font-size="7" text-anchor="start">透過 Istio 分流</text>
+<path d="M 220 110 H 240 V 63 H 268" fill="none" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="254" y="58" fill="#94a3b8" font-size="7" text-anchor="middle">權重</text>
+<path d="M 220 130 H 240 V 118 H 268" fill="none" stroke="#fb923c" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="254" y="140" fill="#94a3b8" font-size="7" text-anchor="middle">header</text>
+<path d="M 342 186 H 383" fill="none" stroke="#fb923c" stroke-width="1.5" marker-start="url(#arrowstart)" marker-end="url(#arrowhead)"/>
+<text x="362" y="162" fill="#94a3b8" font-size="8" text-anchor="middle">東西向</text>
+<rect x="10" y="100" width="76" height="40" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="48.0" y="117.5" fill="white" font-size="10" font-weight="600" text-anchor="middle">用戶端</text>
+<text x="48.0" y="131.5" fill="#94a3b8" font-size="8" text-anchor="middle">南北向</text>
+<rect x="110" y="15" width="110" height="50" rx="6" fill="rgba(6, 78, 59, 0.4)" stroke="#34d399" stroke-width="1.5"/>
+<text x="165.0" y="37.5" fill="white" font-size="10" font-weight="600" text-anchor="middle">Argo Rollouts</text>
+<text x="165.0" y="51.5" fill="#94a3b8" font-size="8" text-anchor="middle">canary · header</text>
+<rect x="110" y="95" width="110" height="50" rx="6" fill="rgba(251, 146, 60, 0.3)" stroke="#fb923c" stroke-width="1.5"/>
+<text x="165.0" y="118.5" fill="white" font-size="12" font-weight="600" text-anchor="middle">Istio</text>
+<text x="165.0" y="132.5" fill="#94a3b8" font-size="9" text-anchor="middle">sidecar</text>
+<rect x="270" y="45" width="185" height="36" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="362.5" y="67.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">stable</text>
+<rect x="270" y="100" width="185" height="36" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="362.5" y="122.0" fill="white" font-size="10" font-weight="600" text-anchor="middle">canary</text>
+<rect x="270" y="170" width="70" height="32" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="305.0" y="189.5" fill="white" font-size="9" font-weight="600" text-anchor="middle">svc A</text>
+<rect x="385" y="170" width="70" height="32" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="420.0" y="189.5" fill="white" font-size="9" font-weight="600" text-anchor="middle">svc B</text>
+<text x="362" y="220" fill="#94a3b8" font-size="7" text-anchor="middle">服務之間經由 sidecar</text>
+</svg>

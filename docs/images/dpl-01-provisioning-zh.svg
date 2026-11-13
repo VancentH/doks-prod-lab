@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 240" width="480" height="240" role="img" aria-labelledby="title desc">
+<title id="title">佈建 · Terraform</title>
+<desc id="desc">Terraform 建立兩個叢集需要的基礎設施：執行 k3s 管理叢集的 Droplet、DOKS workload 叢集、VPC 和 DNS 記錄。</desc>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&amp;display=swap');
+  text { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+</style>
+<rect width="100%" height="100%" fill="#020617"/>
+<defs>
+  <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#64748b"/></marker>
+  <marker id="arrowstart" markerWidth="10" markerHeight="7" refX="1" refY="3.5" orient="auto"><polygon points="10 0, 0 3.5, 10 7" fill="#64748b"/></marker>
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/></pattern>
+</defs>
+<rect width="100%" height="100%" fill="url(#grid)"/>
+<path d="M 150 120 H 225 V 35 H 298" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 150 120 H 225 V 90 H 298" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 150 120 H 225 V 145 H 298" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<path d="M 150 120 H 225 V 200 H 298" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+<text x="188" y="113" fill="#94a3b8" font-size="8" text-anchor="middle">佈建</text>
+<rect x="20" y="90" width="130" height="60" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="85.0" y="118.5" fill="white" font-size="12" font-weight="600" text-anchor="middle">Terraform</text>
+<text x="85.0" y="132.5" fill="#94a3b8" font-size="9" text-anchor="middle">基礎設施即程式碼</text>
+<rect x="300" y="15" width="160" height="40" rx="6" fill="rgba(30, 41, 59, 0.5)" stroke="#94a3b8" stroke-width="1.5"/>
+<text x="380.0" y="33.0" fill="white" font-size="11" font-weight="600" text-anchor="middle">Droplet</text>
+<text x="380.0" y="47.0" fill="#94a3b8" font-size="8" text-anchor="middle">執行 k3s 管理叢集</text>
+<rect x="300" y="70" width="160" height="40" rx="6" fill="rgba(8, 51, 68, 0.4)" stroke="#22d3ee" stroke-width="1.5"/>
+<text x="380.0" y="88.0" fill="white" font-size="11" font-weight="600" text-anchor="middle">DOKS</text>
+<text x="380.0" y="102.0" fill="#94a3b8" font-size="8" text-anchor="middle">workload 叢集</text>
+<rect x="300" y="125" width="160" height="40" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="380.0" y="143.0" fill="white" font-size="11" font-weight="600" text-anchor="middle">VPC</text>
+<text x="380.0" y="157.0" fill="#94a3b8" font-size="8" text-anchor="middle">私有網路</text>
+<rect x="300" y="180" width="160" height="40" rx="6" fill="rgba(120, 53, 15, 0.3)" stroke="#fbbf24" stroke-width="1.5"/>
+<text x="380.0" y="198.0" fill="white" font-size="11" font-weight="600" text-anchor="middle">DNS</text>
+<text x="380.0" y="212.0" fill="#94a3b8" font-size="8" text-anchor="middle">網域記錄</text>
+</svg>
