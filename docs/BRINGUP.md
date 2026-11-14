@@ -7,14 +7,37 @@ and leaves everything else as it is.
 
 ## What it does
 
-1. Preflight checks (`doctl`, `kubectl`, `terraform`, SSH key, required env vars)
-2. Detects your current public IP and exports it as `TF_VAR_admin_cidrs`, so
-   SSH (22) and the k3s API (6443) on the management Droplet are only open to you
+1. Preflight checks (`doctl`, `kubectl`, `terraform`, SSH key, required env vars).
+   The script connects over SSH without prompts, so a passphrase-protected
+   key must already be loaded in `ssh-agent`
+2. Detects your current public IPv4 (bypassing any HTTP proxy) and exports it
+   as `TF_VAR_admin_cidrs`, so SSH (22) and the k3s API (6443) on the
+   management Droplet are only open to you. The rule is a `/32` by default;
+   see [CGNAT networks](#cgnat-networks) if SSH times out
 3. `terraform plan` → confirmation prompt → `terraform apply`
 4. Saves the DOKS kubeconfig via `doctl kubernetes cluster kubeconfig save`
 5. Waits for SSH and `cloud-init` on the management Droplet, then pulls its
    k3s kubeconfig over SSH into `~/.kube/dpl-mgmt.yaml` (context `dpl-mgmt`)
 6. Prints a summary of both clusters' nodes
+
+## CGNAT networks
+
+Some ISPs put customers behind carrier-grade NAT, where different connections
+leave from different public IPs in the same block. The IP that `up.sh` detects
+may then not be the one SSH uses, and the firewall drops SSH even though the
+rule looks right. Widen the rule to the surrounding block:
+
+```bash
+ADMIN_CIDR_PREFIX=24 ./scripts/up.sh
+```
+
+Or set `export ADMIN_CIDR_PREFIX=24` in `.envrc` on such networks. Accepted
+values are 16 – 32. Re-running is safe: Terraform only updates the firewall
+rule.
+
+If SSH still doesn't come up, `up.sh` prints the last SSH error with a hint:
+a timeout usually means the firewall doesn't allow your real source IP, and
+`Permission denied` means the key doesn't match `ssh_key_name` in Terraform.
 
 ## DNS
 
