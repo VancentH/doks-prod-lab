@@ -1,10 +1,10 @@
 # Rancher Bootstrap
 
 `bootstrap/rancher.sh` installs cert-manager and Rancher on the k3s
-management cluster, then imports the DOKS workload cluster so both are
-managed from one place. Run it after `./scripts/up.sh` (see
-[BRINGUP.md](BRINGUP.md)); it is safe to re-run since every step uses
-`helm upgrade --install`.
+management cluster. `bootstrap/import-doks.sh` then registers the DOKS
+workload cluster in Rancher, so both are managed from one place. Run them
+after `./scripts/up.sh` (see [BRINGUP.md](BRINGUP.md)); both are safe to
+re-run.
 
 See [VERSIONS.md](VERSIONS.md) for why these particular versions are pinned.
 
@@ -49,15 +49,34 @@ The script avoids two behaviors that changed between Helm 3 and Helm 4:
 ## Importing DOKS into Rancher
 
 DOKS has no Rancher-hosted provider the way EKS/AKS/GKE do, so the workload
-cluster is imported manually as a **Registered cluster**:
+cluster is imported as a **Registered cluster**. `bootstrap/import-doks.sh`
+does this through the Rancher API, making the same calls as the
+**Cluster Management → Import Existing → Generic** button in the UI:
 
-1. In the Rancher UI, go to **Cluster Management → Import Existing**
-2. Follow the generated `kubectl apply` command against the DOKS kubeconfig
-   (the one `up.sh` already saved)
-3. The DOKS `cattle-cluster-agent` connects back to Rancher over HTTPS (port
-   443 on the management Droplet, open to the internet for exactly this
-   reason; see the firewall rules in
-   `terraform/modules/mgmt-k3s/main.tf`)
+```bash
+./bootstrap/import-doks.sh
+```
+
+1. Preflight checks: required tools, an explicit DOKS kubeconfig context (so
+   the registration manifest can never land on the management cluster), and
+   `https://<rancher-hostname>/ping`
+2. Logs in as `admin` with the bootstrap password that `rancher.sh` saved in
+   `~/.dpl/rancher-bootstrap-password`. If you already changed the password
+   in the UI, pass the new one with `RANCHER_PASSWORD='<new password>'`
+3. Sets Rancher's server URL if it isn't set yet. It is normally set on the
+   first UI login, and the agents connect back to it
+4. Creates the imported cluster, or reuses it if it already exists
+5. Applies the registration manifest to DOKS and waits for
+   `cattle-cluster-agent`
+6. Waits until Rancher reports the cluster as `active` (up to
+   `READY_TIMEOUT` seconds, default 600)
+
+The cluster shows up in Rancher under the DOKS cluster name (`dpl-cluster`);
+set `RANCHER_CLUSTER_NAME` to use a different one.
+
+The DOKS `cattle-cluster-agent` connects back to Rancher over HTTPS (port 443
+on the management Droplet, open to the internet for exactly this reason; see
+the firewall rules in `terraform/modules/mgmt-k3s/main.tf`).
 
 Once the agent connects, both the imported DOKS cluster and the management
 cluster itself (`local`) show **Active** in Rancher's cluster list. Rancher
