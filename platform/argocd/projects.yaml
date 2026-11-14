@@ -1,0 +1,34 @@
+# AppProjects separate what the platform team and the app team may deploy.
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: platform
+  namespace: argocd
+spec:
+  description: Platform components managed from this repo (doks-prod-lab, public).
+  sourceRepos:
+    - https://github.com/VancentH/doks-prod-lab.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: "*"
+  # Platform components need cluster-scoped objects (CRDs, ClusterRoles, Namespaces)
+  clusterResourceWhitelist:
+    - group: "*"
+      kind: "*"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  description: Application workloads managed from the apps repo (public).
+  sourceRepos:
+    - https://github.com/VancentH/kubernetes-production-guide-apps.git
+  # Apps may only deploy into their own namespaces
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: otel-demo
+  # No cluster-scoped objects at all: namespaces are created by the platform
+  clusterResourceWhitelist: []

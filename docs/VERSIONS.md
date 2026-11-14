@@ -11,6 +11,7 @@ independently.
 | cert-manager | v1.21.0 | Kubernetes 1.33 – 1.36 | `bootstrap/rancher.sh` (`CERT_MANAGER_VERSION`) |
 | DOKS | Kubernetes `1.36.x` | — | `terraform/envs/lab/variables.tf` (`kubernetes_version_prefix`) |
 | k3s (management cluster) | `v1.36` channel | — | `terraform/envs/lab/variables.tf` (`k3s_channel`) |
+| Argo CD (Helm chart `argo/argo-cd`) | 10.7.0 | — | `bootstrap/argocd.sh` (`ARGOCD_CHART_VERSION`) |
 
 DOKS was originally pinned to `1.37.`, which falls outside Rancher 2.15.2's
 supported range for imported clusters (1.34 – 1.36). It was moved down to
@@ -24,6 +25,8 @@ release notes before changing anything, then update both sides together:
 
 - Rancher / cert-manager versions live in `bootstrap/rancher.sh`
 - DOKS / k3s versions live in `terraform/envs/lab/variables.tf`
+- The Argo CD chart version lives in `bootstrap/argocd.sh`; check the Argo CD
+  release notes before bumping it
 
 A mismatch does not necessarily break the lab immediately, but Rancher will
 flag the imported DOKS cluster as unsupported and future Rancher/cert-manager

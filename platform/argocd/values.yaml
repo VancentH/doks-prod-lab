@@ -1,0 +1,19 @@
+# Argo CD Helm values for the lab DOKS cluster.
+# Installed by bootstrap/argocd.sh; Argo CD is not yet managing itself.
+
+global:
+  # Run every Argo CD component on the system node pool
+  nodeSelector:
+    node-role.dpl.io/pool: system
+
+# Lab shortcuts to save memory: no SSO (Dex) and no notifications yet
+dex:
+  enabled: false
+notifications:
+  enabled: false
+
+configs:
+  params:
+    # Reconcile every 3 minutes (default) and keep the UI reachable through
+    # "kubectl port-forward" only; no Ingress or LoadBalancer for now
+    server.insecure: false

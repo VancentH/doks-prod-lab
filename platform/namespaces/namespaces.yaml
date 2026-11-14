@@ -1,0 +1,16 @@
+# Namespaces owned by the platform team. App teams deploy into them but
+# cannot create or delete them (see the "apps" AppProject).
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: observability
+  labels:
+    app.kubernetes.io/managed-by: argocd
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: otel-demo
+  labels:
+    app.kubernetes.io/managed-by: argocd
